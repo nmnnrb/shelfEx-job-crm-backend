@@ -3,7 +3,11 @@ const express = require('express');
 const app = express();
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const jobRoutes = require('./routes/jobRoutes');
+const cookieParser = require("cookie-parser");
 
+
+app.use(cookieParser());
 app.use(express.json());
 
 
@@ -18,7 +22,7 @@ app.get('/', (req, res) => {
 );
 
 app.use("/api/auth", authRoutes);
-
+app.use("/api/job", jobRoutes);
 
 const PORT = process.env.PORT || 8080;
 
