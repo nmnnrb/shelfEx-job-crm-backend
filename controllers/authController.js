@@ -17,8 +17,8 @@ exports.signup = async (req, res) => {
           
             res.cookie("token", token, {
             httpOnly: true,
-            secure: true,           
-            sameSite: "None",
+            secure: false,           
+            sameSite: "Lax",
             maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
@@ -34,7 +34,7 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
-
+        console.log("login start")
         const user = await User.findOne({ email });
         console.log("login found user:", user);
 
@@ -49,8 +49,8 @@ exports.login = async (req, res) => {
         // Send token cookie
         res.cookie("token", token, {
             httpOnly: true,
-            secure: true,
-            sameSite: "None",
+            secure: false,
+            sameSite: "Lax",
             maxAge: 1 * 24 * 60 * 60 * 1000
         });
 

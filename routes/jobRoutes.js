@@ -8,8 +8,8 @@ const { auth, adminOnly } = require("../middleware/auth");
 //simple user
 router.post("/", auth, createJob);
 router.get("/", auth,getMyJobs); 
-router.put("/:id", updateMyJob); 
-router.delete("/:id", deleteJob);
+router.put("/:id", auth, updateMyJob); 
+router.delete("/:id", auth,  deleteJob);
 
 
 //admin user

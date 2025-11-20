@@ -46,8 +46,10 @@ exports.updateMyJob = async (req, res) => {
 };
 
 exports.deleteJob = async (req, res) => {
+    console.log("deleteJob called for job id:", req.params.id);
     try {
-        await Job.findOneAndDelete({ _id: req.params.id, userId: req.user._id });
+      const resp =   await Job.findOneAndDelete({ _id: req.params.id, userId: req.user._id });
+        console.log("deleteJob result:", resp);
         res.json({ message: "Deleted" });
     } catch (err) {
         res.status(500).json({ message: err.message });
