@@ -10,6 +10,8 @@ exports.auth = async (req, res, next) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = await User.findById(decoded.id).select("-password");
+
+        console.log("Authenticated user: req.user-------------", req.user);  
         if (!req.user) {
             return res.status(401).json({ message: "User not found, authorization denied" });
         }
@@ -18,3 +20,11 @@ exports.auth = async (req, res, next) => {
         res.status(401).json({ message: "Token is not valid" });
     }
 }
+
+
+exports.adminOnly = (req, res, next) => {
+    if (req.user.role !== "admin")
+        return res.status(403).json({ message: "Admin access only" });
+
+    next();
+};
