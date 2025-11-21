@@ -10,6 +10,10 @@ exports.signup = async (req, res) => {
 
         const exists = await User.findOne({ email });
         console.log("signup found existing user:", exists);
+
+        if(exists) {
+            return  res.status(400).json({ message: "User already exists" });
+        }
      
         const user = await User.create({ name, email, password, role });
 
@@ -63,3 +67,18 @@ exports.login = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+
+exports.logout = (req, res) => {
+   try {
+     res.clearCookie("token", {
+        httpOnly: true,
+        secure: false,
+        sameSite: "Lax"
+    });
+   } catch (error) {
+    console.error("Error clearing cookie:", error);
+    return res.status(500).json({ message: "Error logging out" });
+   }
+    res.json({ message: "Logged out successfully" });
+}
