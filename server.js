@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const path = require('path');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const jobRoutes = require('./routes/jobRoutes');
@@ -26,10 +27,6 @@ const server = http.createServer(app);
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
-
-
 
 
 
@@ -86,13 +83,21 @@ app.use((req, res, next) => {
 
 //----------------------------------------------
 
-app.get('/', (req, res) => {
+app.get('/backendisup', (req, res) => {
     res.send('Hello, Worsdsdld!');
     }
 );
 
 app.use("/api/auth", authRoutes);
 app.use("/api/job", jobRoutes);
+
+
+
+
+
+
+
+
 
 app.get('/api/auth/check', auth, (req, res) => {
     console.log("check auth route called");
@@ -102,6 +107,16 @@ app.get('/api/auth/check', auth, (req, res) => {
         user: req.user
     });
 });
+
+
+app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
+
+// Fallback for SPA routes (use RegExp to avoid path-to-regexp parsing issues)
+app.get(/.*/, (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
+});
+
+
 
 const PORT = process.env.PORT || 8080;
 
