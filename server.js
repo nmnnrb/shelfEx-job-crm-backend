@@ -14,12 +14,12 @@ const { Server } = require('socket.io');
 console.log("CORS origin:", process.env.client_url);
 
 app.set("trust proxy", 1);
-app.use(cors({ origin: process.env.client_url, credentials: true ,
-        methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-    
- }));
 
+
+app.use(cors({
+  origin: true,   // allow same origin
+  credentials: true
+}));
 
 
 const server = http.createServer(app);
