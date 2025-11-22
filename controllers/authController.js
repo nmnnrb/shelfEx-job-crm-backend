@@ -30,8 +30,6 @@ exports.signup = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "None",
-      partitioned: true, // REQUIRED for Safari
-      domain: ".onrender.com", // VERY IMPORTANT
       path: "/",
       maxAge: 1 * 24 * 60 * 60 * 1000,
     });
@@ -75,8 +73,6 @@ exports.login = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "None",
-      partitioned: true, // REQUIRED for Safari
-      domain: ".onrender.com", // VERY IMPORTANT
       path: "/",
       maxAge: 1 * 24 * 60 * 60 * 1000,
     });
